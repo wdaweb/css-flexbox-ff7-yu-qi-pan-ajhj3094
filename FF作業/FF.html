@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      color: white;
+      font-family: '微軟正黑體';
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    .bg {
+      height: 100%;
+      background: no-repeat center center/cover;
+      background-image: linear-gradient(0deg, rgba(0, 0, 0, 1), transparent), url("./images/bg-full.jpg");
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      width: 1400px;
+      height: 700px;
+      border: 1px solid #333;
+      margin: auto;
+      display: flex;
+      flex-direction: row;
+    }
+
+    .ps4 {
+      width: 50%;
+      height: 100%;
+      background: no-repeat center/cover;
+      background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 100%), url("./images/main.jpg");
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding-left: 60px;
+      padding-right: 60px;
+    }
+
+    .ps4 img {
+      width: 35%;
+    }
+
+    .ps4 h1 {
+      text-align: center;
+    }
+
+    .ps4 p {
+      font-size: 1rem;
+      text-align: center;
+    }
+
+    /* role------------------------------------------- */
+    .role {
+      width: 50%;
+      height: 100%;
+    }
+
+    .role .cloud {
+      width: 100%;
+      height: 50%;
+      background-color: #bbb;
+    }
+
+    .role .tifa {
+      width: 100%;
+      height: 50%;
+      background-color: #000;
+    }
+
+    .cloud {
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+
+    }
+
+    .cloud .text {
+      width: 60%;
+      margin-bottom: 15%;
+    }
+
+    .cloud h1 {
+      color: #000;
+      /* margin-left: -5%; */
+    }
+
+    .cloud p {
+      font-size: 1rem;
+      color: #000;
+    }
+
+    .cloud img {
+      width: 35%;
+    }
+
+    .tifa img {
+      width: 35%;
+      /* margin-bottom: -6%; */
+      margin-left: 3%;
+    }
+
+    .tifa p {
+      font-size: 1rem;
+    }
+
+    .tifa .text {
+      width: 60%;
+      margin-bottom: 13%;
+      margin-left: -5%;
+    }
+
+    .tifa {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg">
+    <div class="container">
+      <div class="ps4">
+        <img src="./images/ps4-ff7.png">
+        <h1>AVAILABLE NOW</h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum aperiam accusantium animi consequuntur ad
+          sed itaque, enim porro nobis sint laborum odio sit amet consectetur adipisicing elit consectetur adipisicin
+        </p>
+      </div>
+      <div class="role">
+        <div class="cloud">
+          <div class="text">
+            <h1>Cloud</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, repellat iste? Enim architecto quibusdam
+              cum. , architecto optio perspiciatis velit ab magni architecto optio perspiciatis velit ab magni
+              architecto optio perspiciatis velit ab magni
+            </p>
+          </div>
+          <img src="./images/cloud.png">
+        </div>
+        <div class="tifa">
+          <img src="./images/tifa.png">
+          <div class="text">
+            <h1>Tifa</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, repellat iste? Enim architecto quibusdam
+              cum. , architecto optio perspiciatis velit ab magni architecto optio perspiciatis velit ab magni
+              architecto optio perspiciatis velit ab magni
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
