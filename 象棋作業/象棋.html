@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: '標楷體';
+      text-align: center;
+    }
+
+    html,
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      /* position: relative; */
+    }
+
+    body {
+      position: relative;
+    }
+
+    /* -------------------------------- 兩欄字 + 棋盤繪製 --------------------------------*/
+    .outside-with-text {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 700px;
+      height: 700px;
+      /* border: 1px solid #000; */
+    }
+
+    .left-words {
+      writing-mode: vertical-lr;
+      /* border: 1px solid #000; */
+      font-size: 2rem;
+    }
+
+    .chess-square {
+      width: 480px;
+      height: 540px;
+      /* border: 1px solid #000; */
+      outline: 1px solid #000;
+      outline-offset: 40px;
+    }
+
+    .right-words {
+      writing-mode: vertical-lr;
+      /* border: 1px solid #000; */
+      font-size: 2rem;
+    }
+
+    .black-field {
+      width: 480px;
+      height: 240px;
+      /* border: 1px solid #000; */
+      display: flex;
+      flex-direction: row;
+      position: relative;
+    }
+
+    .river {
+      width: 480px;
+      height: 60px;
+      /* border: 1px solid #000; */
+      display: flex;
+      flex-direction: row;
+    }
+
+    .chu-her {
+      width: 240px;
+      height: 60px;
+      /* border: 1px solid #000; */
+      border-left: 1px solid #000;
+    }
+
+    .chu-her h1 {
+      text-align: center;
+      line-height: 60px;
+    }
+
+    .han-zhei {
+      width: 240px;
+      height: 60px;
+      /* border: 1px solid #000; */
+      border-right: 1px solid #000;
+    }
+
+    .han-zhei h1 {
+      text-align: center;
+      line-height: 60px;
+    }
+
+    .red-field {
+      width: 480px;
+      height: 240px;
+      /* border: 1px solid #000; */
+      position: relative;
+      display: flex;
+      flex-direction: row;
+    }
+
+    .board-box {
+      width: 60px;
+      height: 60px;
+      border: 1px solid #000;
+    }
+
+    .black-column-5 {
+      position: relative;
+    }
+
+    .black-column-5 .board-box:nth-child(3)::before {
+      content: "";
+      width: 169.7056px;
+      height: 169.7056px;
+      position: absolute;
+      transform: rotate(45deg);
+      border: 1px solid #000;
+      right: -86px;
+      bottom: 34px;
+      border-top: none;
+      border-bottom: none;
+      border-right: none;
+    }
+
+    .black-column-5 .board-box:nth-child(3)::after {
+      content: "";
+      width: 169.7056px;
+      height: 169.7056px;
+      position: absolute;
+      transform: rotate(45deg);
+      border: 1px solid #000;
+      right: 34px;
+      bottom: 33px;
+      border-left: none;
+      border-bottom: none;
+      border-right: none;
+
+    }
+
+    .red-column-4 {
+      position: relative;
+    }
+
+    .red-column-4 .board-box:nth-child(4)::before {
+      content: "";
+      width: 169.7056px;
+      height: 169.7056px;
+      position: absolute;
+      transform: rotate(45deg);
+      border: 1px solid #000;
+      left: 36px;
+      bottom: 34px;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+    }
+
+    .red-column-4 .board-box:nth-child(4)::after {
+      content: "";
+      width: 169.7056px;
+      height: 169.7056px;
+      position: absolute;
+      transform-origin: 60px 0;
+      transform: rotate(45deg);
+      border: 1px solid #000;
+      right: -93px;
+      bottom: 27px;
+      border-top: none;
+      border-left: none;
+      border-bottom: none;
+    }
+
+    /* -------------------------- 去除方格重疊間線 ( 橫線 ) ---------------------------- */
+
+    .black-column-1 .board-box:not(.no) {
+      border-bottom: none;
+    }
+
+    .black-column-2 .board-box:not(.no) {
+      border-bottom: none;
+    }
+
+    .black-column-3 .board-box:not(.no) {
+      border-bottom: none;
+    }
+
+    .black-column-4 .board-box:not(.no) {
+      border-bottom: none;
+    }
+
+    .black-column-5 .board-box:not(.no) {
+      border-bottom: none;
+    }
+
+    .black-column-6 .board-box:not(.no) {
+      border-bottom: none;
+    }
+
+    .black-column-7 .board-box:not(.no) {
+      border-bottom: none;
+    }
+
+    .black-column-8 .board-box:not(.no) {
+      border-bottom: none;
+    }
+
+    .red-column-1 .board-box:not(.no) {
+      border-bottom: none;
+    }
+
+    .red-column-2 .board-box:not(.no) {
+      border-bottom: none;
+    }
+
+    .red-column-3 .board-box:not(.no) {
+      border-bottom: none;
+    }
+
+    .red-column-4 .board-box:not(.no) {
+      border-bottom: none;
+    }
+
+    .red-column-5 .board-box:not(.no) {
+      border-bottom: none;
+    }
+
+    .red-column-6 .board-box:not(.no) {
+      border-bottom: none;
+    }
+
+    .red-column-7 .board-box:not(.no) {
+      border-bottom: none;
+    }
+
+    .red-column-8 .board-box:not(.no) {
+      border-bottom: none;
+    }
+
+    /* ------------------------- 去除方格重疊間線 ( 縱線 ) -------------------------- */
+
+    .black-column-1 .board-box {
+      border-right: none;
+    }
+
+    .black-column-2 .board-box {
+      border-right: none;
+    }
+
+    .black-column-3 .board-box {
+      border-right: none;
+    }
+
+    .black-column-4 .board-box {
+      border-right: none;
+    }
+
+    .black-column-5 .board-box {
+      border-right: none;
+    }
+
+    .black-column-6 .board-box {
+      border-right: none;
+    }
+
+    .black-column-7 .board-box {
+      border-right: none;
+    }
+
+    .red-column-1 .board-box {
+      border-right: none;
+    }
+
+    .red-column-2 .board-box {
+      border-right: none;
+    }
+
+    .red-column-3 .board-box {
+      border-right: none;
+    }
+
+    .red-column-4 .board-box {
+      border-right: none;
+    }
+
+    .red-column-5 .board-box {
+      border-right: none;
+    }
+
+    .red-column-6 .board-box {
+      border-right: none;
+    }
+
+    .red-column-7 .board-box {
+      border-right: none;
+    }
+
+    /* --------------------------------- 棋子 pieces 45px----------------------------------- */
+    /* 60*8+45  60*3+45 */
+
+    .black-pieces-container {
+      width: 525px;
+      height: 225px;
+      position: absolute;
+      /* 棋子一顆長寬 45px，除以 2 得到 22.5 px */
+      right: -22.5px;
+      bottom: 36px;
+      line-height: 45px;
+      font-size: 2rem;
+    }
+
+    .black-pieces-row1 {
+      width: 525px;
+      height: 56.25px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .black-pieces-row2 {
+      width: 525px;
+      height: 56.25px;
+    }
+
+    .black-pieces-row3 {
+      width: 525px;
+      height: 56.25px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+
+    .black-pieces-row4 {
+      width: 525px;
+      height: 56.25px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+
+    .black-pieces {
+      width: 45px;
+      height: 45px;
+      border: 1px solid #000;
+      border-radius: 50%;
+      background-color: #fff;
+    }
+
+    /* -------------------- 紅色領地棋子的容器：將黑色領地設定 reverse 反轉  ---------------------- */
+    /* -------------------- 記得這裡是 absolute，要在父容器做 relative，才不會跑版----------------- */
+    /* -------------------- 這裡定位所對應到的父容器是 .red-field ------------------------------- */
+    .black-pieces-container-reverse-to-red {
+      width: 525px;
+      height: 225px;
+      position: absolute;
+      /* 棋子一顆長寬 45px，除以 2 得到 22.5 px */
+      right: -22.5px;
+      bottom: 36px;
+      line-height: 45px;
+      font-size: 2rem;
+      display: flex;
+      flex-direction: column-reverse;
+      top: 16%;
+      color: red;
+    }
+
+    /* ------------------------------ 用 flex 校正上下偏差 --------------------------------- */
+
+    .black-pieces-row4-turns-red {
+      width: 525px;
+      height: 56.25px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .black-pieces-row3-turns-red {
+      width: 525px;
+      height: 56.25px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      align-items: flex-start;
+    }
+
+    .black-pieces-row1-turns-red {
+      width: 525px;
+      height: 56.25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="outside-with-text">
+    <p class="left-words">棋盤裡，車無輪，馬無韁，叫聲將軍提防提防</p>
+    <div class="chess-square">
+      <div class="black-field">
+        <div class="black-column-1">
+          <div class="board-box"></div>
+          <div class="board-box"></div>
+          <div class="board-box"></div>
+          <div class="board-box no"></div>
+        </div>
+        <div class="black-column-2">
+          <div class="board-box"></div>
+          <div class="board-box"></div>
+          <div class="board-box"></div>
+          <div class="board-box no"></div>
+        </div>
+        <div class="black-column-3">
+          <div class="board-box"></div>
+          <div class="board-box"></div>
+          <div class="board-box"></div>
+          <div class="board-box no"></div>
+        </div>
+        <div class="black-column-4">
+          <div class="board-box"></div>
+          <div class="board-box"></div>
+          <div class="board-box"></div>
+          <div class="board-box no"></div>
+        </div>
+        <div class="black-column-5">
+          <div class="board-box"></div>
+          <div class="board-box"></div>
+          <div class="board-box rotate"></div>
+          <div class="board-box no"></div>
+        </div>
+        <div class="black-column-6">
+          <div class="board-box"></div>
+          <div class="board-box"></div>
+          <div class="board-box"></div>
+          <div class="board-box no"></div>
+        </div>
+        <div class="black-column-7">
+          <div class="board-box"></div>
+          <div class="board-box"></div>
+          <div class="board-box"></div>
+          <div class="board-box no"></div>
+        </div>
+        <div class="black-column-8">
+          <div class="board-box"></div>
+          <div class="board-box"></div>
+          <div class="board-box"></div>
+          <div class="board-box no"></div>
+        </div>
+        <!-- ------------- 將棋子疊上棋盤：用定位將父元素設定 relative，黑棋的容器設定 absolute ---------------->
+        <section class="black-pieces-container">
+          <div class="black-pieces-row1">
+            <div class="black-pieces">車</div>
+            <div class="black-pieces">馬</div>
+            <div class="black-pieces">象</div>
+            <div class="black-pieces">士</div>
+            <div class="black-pieces">將</div>
+            <div class="black-pieces">士</div>
+            <div class="black-pieces">象</div>
+            <div class="black-pieces">馬</div>
+            <div class="black-pieces">車</div>
+          </div>
+          <div class="black-pieces-row2"></div>
+          <div class="black-pieces-row3">
+            <div class="black-pieces" style="margin-right:200px">包</div>
+            <div class="black-pieces">包</div>
+          </div>
+          <div class="black-pieces-row4">
+            <div class="black-pieces">卒</div>
+            <div class="black-pieces">卒</div>
+            <div class="black-pieces">卒</div>
+            <div class="black-pieces">卒</div>
+            <div class="black-pieces">卒</div>
+          </div>
+        </section>
+      </div>
+      <div class="river">
+        <div class="chu-her">
+          <h1>楚河</h1>
+        </div>
+        <div class="han-zhei">
+          <h1>漢界</h1>
+        </div>
+      </div>
+      <div class="red-field">
+        <div class="red-column-1">
+          <div class="board-box"></div>
+          <div class="board-box"></div>
+          <div class="board-box"></div>
+          <div class="board-box no"></div>
+        </div>
+        <div class="red-column-2">
+          <div class="board-box"></div>
+          <div class="board-box"></div>
+          <div class="board-box"></div>
+          <div class="board-box no"></div>
+        </div>
+        <div class="red-column-3">
+          <div class="board-box"></div>
+          <div class="board-box"></div>
+          <div class="board-box"></div>
+          <div class="board-box no"></div>
+        </div>
+        <div class="red-column-4">
+          <div class="board-box"></div>
+          <div class="board-box"></div>
+          <div class="board-box"></div>
+          <div class="board-box rotate no"></div>
+        </div>
+        <div class="red-column-5">
+          <div class="board-box"></div>
+          <div class="board-box"></div>
+          <div class="board-box"></div>
+          <div class="board-box no"></div>
+        </div>
+        <div class="red-column-6">
+          <div class="board-box"></div>
+          <div class="board-box"></div>
+          <div class="board-box"></div>
+          <div class="board-box no"></div>
+        </div>
+        <div class="red-column-7">
+          <div class="board-box"></div>
+          <div class="board-box"></div>
+          <div class="board-box"></div>
+          <div class="board-box no"></div>
+        </div>
+        <div class="red-column-8">
+          <div class="board-box"></div>
+          <div class="board-box"></div>
+          <div class="board-box"></div>
+          <div class="board-box no"></div>
+        </div>
+        <!-- -------------------------------- 黑色領地容器 反轉成 紅色領地容器 ----------------------------- -->
+        <section class="black-pieces-container-reverse-to-red">
+          <div class="black-pieces-row1-turns-red">
+            <div class="black-pieces">俥</div>
+            <div class="black-pieces">傌</div>
+            <div class="black-pieces">相</div>
+            <div class="black-pieces">仕</div>
+            <div class="black-pieces">帥</div>
+            <div class="black-pieces">仕</div>
+            <div class="black-pieces">相</div>
+            <div class="black-pieces">傌</div>
+            <div class="black-pieces">俥</div>
+          </div>
+          <div class="black-pieces-row2"></div>
+          <div class="black-pieces-row3-turns-red">
+            <div class="black-pieces" style="margin-right:200px">炮</div>
+            <div class="black-pieces">炮</div>
+          </div>
+          <div class="black-pieces-row4-turns-red">
+            <div class="black-pieces">兵</div>
+            <div class="black-pieces">兵</div>
+            <div class="black-pieces">兵</div>
+            <div class="black-pieces">兵</div>
+            <div class="black-pieces">兵</div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+    <p class="right-words">圖畫裡，龍不吟，虎不嘯，小小書僮可笑可笑</p>
+
+  </div>
+
+</body>
+
+</html>
